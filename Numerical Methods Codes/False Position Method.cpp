@@ -1,0 +1,64 @@
+#include<bits/stdc++.h>
+#include<math.h>
+using namespace std;
+
+float func(float x);
+
+float func(float x)
+{
+    float a = x * x - 4 * x - 10;
+    //float a = 5*x*x*x - 5*x*x + 6*x - 2;
+    return a;
+}
+
+int main()
+{
+    float a,b,c,e,fa,fb,fc;
+    int iter = 0;
+a:
+    cout << "Enter the values : " << endl;
+    cout << "Enter a : ";
+    cin >> a;
+    cout << "Enter b : ";
+    cin >> b;
+    cout << "Enter the degree of accuracy : ";
+    cin >> e;
+
+    fa = func(a);
+    fb = func(b);
+
+    if((func(a) * func(b)) > 0.0)
+    {
+        cout << "Enter different values : " << endl;
+        goto a;
+    }
+    else
+    {
+        cout << endl;
+        cout << "Iteration" << setw(14) << "a" << setw(14) << "b" << setw(20) << "c" << setw(20) << "f(c)" << setw(25) << "|a - b|" << endl;
+        cout << "--------------------------------------------------------------------------------------------------------------\n";
+        do
+        {
+            c = a - ((fa * (b - a))/(fb - fa));
+            fc = func(c);
+            iter++;
+            cout << iter << setw(20) << a << setw(20) << b << setw(20) << c << setw(20) << fc << setw(20) << fabs(a - b) << endl;
+
+            if(fc == 0)
+            {
+                cout << "The root of the equation : " << c << endl;
+                break;
+            }
+            else if((fa * fc) < 0)
+            {
+                b = c;
+            }
+            else
+            {
+                a = c;
+            }
+        }
+        while(fabs(a - b) > e);
+    }
+    cout << "The root of the equation : " << c << endl;
+}
